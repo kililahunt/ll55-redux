@@ -182,8 +182,6 @@ class App extends Component {
                 });
             }
 
-        console.log(mainFilter);
-
         if (mainFilter.by === 'name') {
             tasks.sort((a, b) => {
                 if (a.name > b.name) return mainFilter.status;
@@ -240,7 +238,6 @@ class App extends Component {
                 <div className="row mt-15">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <TaskList 
-                        	tasks = {tasks}
                         	onUpdateStatus = {this.onUpdateStatus}
                         	onDelete = {this.onDelete}
                             onUpdate = {this.onUpdate}
