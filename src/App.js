@@ -10,7 +10,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks : [],
             isDisplayForm : false,
             taskEditing : null,
             filter : {
@@ -26,26 +25,8 @@ class App extends Component {
 		}
 	}
 
-	componentDidMount() {
-		if (localStorage && localStorage.getItem('tasks')) {
-			var tasks = JSON.parse(localStorage.getItem('tasks'));
-			this.setState({
-				tasks : tasks
-			});
-		}
-	}
+
 	
-
-
-	s4()
-	{
-		return Math.floor((1+Math.random()) * 0x10000).toString(16).substring(1);
-	}
-
-	generateID()
-	{
-		return this.s4() + this.s4() + '-' + this.s4();
-	}
 
     showTask = () =>
     {
@@ -158,8 +139,8 @@ class App extends Component {
 
 	render() {
 
-		var {tasks, isDisplayForm, filter, keyWord, mainFilter} = this.state;
-        if (filter) {
+		var { isDisplayForm, filter, keyWord, mainFilter} = this.state;
+        /*if (filter) {
             if (filter.name)
             {
                 tasks = tasks.filter((task) => {
@@ -180,9 +161,9 @@ class App extends Component {
                 tasks = tasks.filter((task) => {
                     return task.name.toLowerCase().indexOf(keyWord) !== -1;
                 });
-            }
+            }*/
 
-        if (mainFilter.by === 'name') {
+        /*if (mainFilter.by === 'name') {
             tasks.sort((a, b) => {
                 if (a.name > b.name) return mainFilter.status;
                 else if (a.name < b.name) return -mainFilter.status;
@@ -194,7 +175,7 @@ class App extends Component {
                 else if (a.status < b.status) return mainFilter.status;
                 else return 0;
             });
-        }
+        }*/
         
         var eleForm = (isDisplayForm ?
              <TaskForm 
