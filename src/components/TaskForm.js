@@ -120,8 +120,10 @@ class TaskForm extends Component {
 
 const mapDispatchToProps = (dispatch, task) => {
     return {
-        onAddTask: (task) => dispatch(actions.onAddTask(task))
+        onAddTask: (task) => dispatch(actions.onAddTask(task)),
+        onCloseForm: () => dispatch(actions.onCloseForm())
     }
 }
+
 
 export default connect(null, mapDispatchToProps)(TaskForm);

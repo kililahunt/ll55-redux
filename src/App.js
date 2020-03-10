@@ -3,6 +3,8 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import TaskControl from './components/TaskControl';
 import TaskList from './components/TaskList';
+import {connect} from 'react-redux';
+import * as actions from './actions/index'
 
 
 class App extends Component {
@@ -24,8 +26,6 @@ class App extends Component {
             }
 		}
 	}
-
-
 	
 
     showTask = () =>
@@ -42,30 +42,11 @@ class App extends Component {
         });
     }
 
-    onShowForm = () => {
-        this.setState({
-            isDisplayForm : true
-        });
+    onToggleForm = () => {
+        this.props.onToggleForm();
     }
 
-    onSubmit = (data) => {
-        var {tasks} = this.state;
-        if (data.id === '')
-        {           
-            data.id = this.generateID();
-            tasks.push(data);
-            
-        } else 
-        {
-            var index = this.findIndex(data.id);
-            tasks[index] = data;
-        };
-        this.setState({
-                tasks : tasks,
-                taskEditing : null
-            });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
+    
 
     onUpdateStatus = (id) =>{
     	var {tasks} = this.state;
@@ -139,7 +120,7 @@ class App extends Component {
 
 	render() {
 
-		var { isDisplayForm, filter, keyWord, mainFilter} = this.state;
+		var { filter, keyWord, mainFilter} = this.state;
         /*if (filter) {
             if (filter.name)
             {
@@ -176,11 +157,11 @@ class App extends Component {
                 else return 0;
             });
         }*/
+
+        var {isDisplayForm} = this.props;
         
         var eleForm = (isDisplayForm ?
              <TaskForm 
-                onSubmit = {this.onSubmit}
-                onCloseForm = {this.onCloseForm}
                 taskEditing = {this.state.taskEditing}
                 /> : '');
 		return (
@@ -201,7 +182,7 @@ class App extends Component {
                 <button 
                     type="button" 
                     className="btn btn-primary"
-                    onClick = {this.showTask}
+                    onClick = {this.onToggleForm}
                 >
                     <span className="fa fa-plus mr-5"></span>Add Task
                 </button>
@@ -233,4 +214,18 @@ class App extends Component {
 	}
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        isDisplayForm : state.isDisplayForm
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onToggleForm : () => {
+            dispatch(actions.onToggleForm())
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
