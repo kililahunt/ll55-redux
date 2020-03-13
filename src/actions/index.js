@@ -30,3 +30,10 @@ export const onCloseForm = () => {
 		type: types.CLOSE_FORM
 	}
 }
+
+export const onUpdateStatus = (id) => {
+	return {
+		type: types.UPDATE_STATUS_TASK,
+		id
+	}
+}
