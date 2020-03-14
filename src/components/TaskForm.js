@@ -13,9 +13,6 @@ class TaskForm extends Component {
       };
     }
 
-    componentWillMount() {
-        
-    }
      
     componentWillReceiveProps(nextProps) {
        if (nextProps && nextProps.taskEditing)
@@ -35,6 +32,7 @@ class TaskForm extends Component {
             })
         }
     }
+
 
     onHandleClose = () =>{
         this.props.onCloseForm();

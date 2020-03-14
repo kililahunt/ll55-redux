@@ -37,3 +37,10 @@ export const onUpdateStatus = (id) => {
 		id
 	}
 }
+
+export const onDeleteTask = (id) => {
+	return {
+		type: types.DELETE_TASK,
+		id
+	}
+}

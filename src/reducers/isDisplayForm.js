@@ -11,9 +11,8 @@ var myReducer = (state = initialState, action) => {
 		case types.CLOSE_FORM:
 		 return false;
 		default: return state;
-	}
-	return state;
-};
+	};
+}
 
 
 export default myReducer;

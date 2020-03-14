@@ -27,6 +27,7 @@ var findIndex = (id, state) => {
 
 
 var myReducer = (state = initialState, action) => {
+	var index = -1;
 	switch(action.type) {
 		case types.LIST_ALL:
 			return state;
@@ -42,15 +43,20 @@ var myReducer = (state = initialState, action) => {
 			return [...state];
 
 		case types.UPDATE_STATUS_TASK:
-			var index = findIndex(action.id, state);
+			index = findIndex(action.id, state);
 			state[index] = {
 				...state[index],
 				status : !state[index].status
 			}
 			return [...state];
+
+		case types.DELETE_TASK:
+			index = findIndex(action.id, state);
+			state.splice(index, 1);
+			localStorage.setItem('tasks', JSON.stringify(state));
+			return [...state];
 		default: return state;
 	}
-	return state;
 };
 
 
