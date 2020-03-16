@@ -44,6 +44,11 @@ class App extends Component {
 
     onToggleForm = () => {
         this.props.onToggleForm();
+        this.props.onClearTask({
+            id: '',
+            name: '',
+            status: false
+        });
     }
 
     
@@ -133,10 +138,6 @@ class App extends Component {
 
         var {isDisplayForm} = this.props;
         
-        var eleForm = (isDisplayForm ?
-             <TaskForm 
-                taskEditing = {this.state.taskEditing}
-                /> : '');
 		return (
 			<div className="container">
         <div className="text-center">
@@ -146,9 +147,9 @@ class App extends Component {
         </div>
         <div className="row">
 
-        		
+        	
             <div className= {isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : ''}>
-             	{eleForm}
+             	<TaskForm />
             </div>
 
             <div className= {isDisplayForm?'col-xs-8 col-sm-8 col-md-8 col-lg-8': 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
@@ -195,6 +196,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onToggleForm : () => {
             dispatch(actions.onToggleForm())
+        },
+        onClearTask: (task) => {
+            dispatch(actions.onEditTask(task))
         }
     };
 }

@@ -6,11 +6,22 @@ class TaskForm extends Component {
 
     constructor(props) {
       super(props);  
-      this.state = {
-        id : '',
-        name : '',
-        status : true
-      };
+      this.state = {};
+    }
+
+    componentDidMount() {
+        if (this.props.taskEditing.id !== null) 
+        {
+            console.log('true');
+            this.setState({
+                id: this.props.taskEditing.id,
+                name: this.props.taskEditing.name,
+                status: this.props.taskEditing.status
+            });
+        } else {
+            console.log('false');
+            this.onClear();
+        }
     }
 
      
@@ -22,7 +33,7 @@ class TaskForm extends Component {
             name : nextProps.taskEditing.name,
             status : nextProps.taskEditing.status
         });
-        console.log(this.state);
+
         } else if (!nextProps.taskEditing)
         {
             this.setState({
@@ -53,13 +64,13 @@ class TaskForm extends Component {
 
     onSubmit = (event) =>{
         event.preventDefault();
-        this.props.onAddTask(this.state);
-        /*this.props.onSubmit(this.state);*/
+        this.props.onSaveTask(this.state);
         this.onClear();
     }
 
     onClear = () => {
         this.setState({
+            id: '',
             name : '',
             status : true
         });
@@ -68,12 +79,12 @@ class TaskForm extends Component {
 	render() {
 
         var {id} = this.state;
-
+        if (!this.props.isDisplayForm) return '';
 		return(
 			  <div className="panel panel-warning">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            {(id !== '') ? 'Edit Task' : 'Add Task'}
+                            {(id !== undefined) ? 'Edit Task' : 'Add Task'}
                                 <span
                                 className = "fa fa-times-circle text-right"
                                 onClick = {this.onHandleClose}
@@ -116,12 +127,19 @@ class TaskForm extends Component {
 	}
 }
 
+const mapStateToProps = (state) => {
+    return {
+        isDisplayForm: state.isDisplayForm,
+        taskEditing: state.taskEditing
+    }
+}
+
 const mapDispatchToProps = (dispatch, task) => {
     return {
-        onAddTask: (task) => dispatch(actions.onAddTask(task)),
+        onSaveTask: (task) => dispatch(actions.onSaveTask(task)),
         onCloseForm: () => dispatch(actions.onCloseForm())
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(TaskForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
