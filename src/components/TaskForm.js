@@ -70,7 +70,6 @@ class TaskForm extends Component {
 
     onClear = () => {
         this.setState({
-            id: '',
             name : '',
             status : true
         });
@@ -84,7 +83,7 @@ class TaskForm extends Component {
 			  <div className="panel panel-warning">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            {(id !== undefined) ? 'Edit Task' : 'Add Task'}
+                            {(id !== '') ? 'Edit Task' : 'Add Task'}
                                 <span
                                 className = "fa fa-times-circle text-right"
                                 onClick = {this.onHandleClose}

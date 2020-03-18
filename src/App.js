@@ -13,7 +13,6 @@ class App extends Component {
 		super(props);
 		this.state = {
             isDisplayForm : false,
-            taskEditing : null,
             filter : {
                 name : '',
                 status : -1
@@ -43,7 +42,12 @@ class App extends Component {
     }
 
     onToggleForm = () => {
-        this.props.onToggleForm();
+        var { taskEditing } = this.props;
+        if (taskEditing && taskEditing.id) {
+            this.props.onOpenForm();
+        } else {
+            this.props.onToggleForm();
+        }     
         this.props.onClearTask({
             id: '',
             name: '',
@@ -188,7 +192,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isDisplayForm : state.isDisplayForm
+        isDisplayForm : state.isDisplayForm,
+        taskEditing : state.taskEditing
     };
 }
 
@@ -199,6 +204,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onClearTask: (task) => {
             dispatch(actions.onEditTask(task))
+        },
+        onOpenForm: () => {
+        dispatch(actions.onOpenForm())
         }
     };
 }
